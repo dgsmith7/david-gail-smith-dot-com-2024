@@ -1,0 +1,35 @@
+{
+  "name": "david-gail-smith-dot-com-2024",
+  "version": "1.0.0",
+  "description": "Personal website for artist David Gail Smith",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "npx hardhat test",
+    "dev": "npx nodemon app.js",
+    "start": "node app.js",
+    "build:digitalocean": "npm install --production=false && npm run build && npm ci"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgsmith7/david-gail-smith-dot-com-2024.git"
+  },
+  "author": "David Gail Smith, DGS Creative, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dgsmith7/dgs-io/issues"
+  },
+  "homepage": "https://www.davidgailsmith.com",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mysql2": "^3.7.1",
+    "nodemailer": "^6.9.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "keywords": []
+}
