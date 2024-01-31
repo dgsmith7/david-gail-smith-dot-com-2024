@@ -7,7 +7,6 @@ import cors from "cors";
 
 let projects = [];
 let contracts = [];
-let mints = [];
 
 const app = express();
 app.use(cors({ methods: ["GET", "POST"] }));
@@ -23,23 +22,34 @@ app.get("/", async (req, res, next) => {
       // query the databse for project records
       projects = await db.getAllProjects();
       contracts = [];
-      mints = [];
       projects.forEach((item) => {
-        contracts.push(item.contractAddress);
-        mints.push(0); // initializing parallel array
-        let arr = item.open_date_gmt.toString().split(" ");
-        arr[5] = "";
-        let newDTG = arr.join(" ");
-        item.open_date_gmt = newDTG;
+        let pString = "";
+        let p = item.price;
+        if (p == -1) {
+          pString += "Not for sale";
+        } else if (p == 0) {
+          pString = "Contact me for price please.";
+        } else {
+          pString += "$" + item.price + " + tax and shipping";
+        }
+        item.price = pString;
+        //        console.log(item.price);
+        // image
+        // item.img_url = "./images" + item.img_url;
+        //        console.log(item.img_url);
       });
       res.render("index.ejs", {
         contracts: contracts,
-        mints: mints,
         projects: projects,
       });
     })
     .catch(next);
 });
+
+// app.get("/login", async (req, res) => {
+//   console.log("Im in ");
+//   res.render("sign-in.ejs");
+// });
 
 app.post("/mail", async (req, res) => {
   if (req.body.ftb == true) {
@@ -55,38 +65,6 @@ app.post("/mail", async (req, res) => {
     res.send({ result: "No mail bots allowed" });
   }
 });
-
-// app.post("/captcha", async (req, res) => {
-//   if (
-//     req.body.token === undefined ||
-//     req.body.token === "" ||
-//     req.body.token === null
-//   ) {
-//     return res.json({ responseError: "something is wrong" });
-//   } else {
-//   }
-//   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-//   const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.token}`;
-//   fetch(verificationURL, {
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//     method: "POST",
-//   })
-//     .then((response) => {
-//       return response.text();
-//     })
-//     .then((text) => {
-//       let info = JSON.parse(text);
-//       if (info.success == true && info.score >= 0.75) {
-//         res.send({ result: "success" });
-//       }
-//     })
-//     .catch((error) => {
-//       res.send({ result: "failure" });
-//     });
-// });
 
 app.use(async (err, req, res, next) => {
   console.log(err);
