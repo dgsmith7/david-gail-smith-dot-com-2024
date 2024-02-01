@@ -184,3 +184,9 @@ a.buttons-light,
   color: #cccccc;
   transition: 1500ms;
 }
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
