@@ -358,6 +358,7 @@ async function doProject(id) {
   if (projectList[id].price == "Not for sale") {
     document.querySelector("#add-button").classList.add("disabled");
     document.querySelector("#add-anchor").href = "javascript:void(0)";
+    document.querySelector("#add-anchor").style.cursor = "default";
   }
   let noteString = projectList[id].notes;
   let notesArray = noteString.split("*");
