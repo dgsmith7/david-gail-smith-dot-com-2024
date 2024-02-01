@@ -110,7 +110,6 @@ card {
   transition: 1500ms;
 }
 
-a.buttons-light,
 .buttons-light,
 .buttons-light.btn.disabled {
   color: #000000;

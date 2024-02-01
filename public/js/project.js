@@ -20,7 +20,7 @@ export let projectCode = `
               </div>
             </div>
             <div class="card-footer">
-            <button id="add-button" class="buttons-mint buttons-light btn btn-outline-light"><a href="/#arist" class="buttons-light">Contact Artist to Purchase</a></button>
+            <a href="/#contact" id="add-anchor"><button id="add-button" class="buttons-mint buttons-light btn btn-outline-light">Contact Artist to Purchase</button></a>
               <div id="project-id" class="d-none"><%= project.id %></div>
             </div>
           </div>
