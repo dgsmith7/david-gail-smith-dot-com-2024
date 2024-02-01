@@ -11,7 +11,7 @@ document.querySelector("#dark-mode-switch").addEventListener("click", () => {
 
 let projectList = JSON.parse(document.querySelector("#projects").innerHTML);
 let isConnected = false;
-let projectIds = [];
+//let projectIds = [];
 let connect = document.querySelector("#login-button");
 
 // wallet connection (also see below)
@@ -378,9 +378,10 @@ async function doProject(id) {
 
 function updateProjects(category) {
   // init variables
-  projectIds = [];
+  //projectIds = [];
   let count = 0;
   let filter = document.getElementById("search-term").value.toUpperCase();
+  if (filter == "") filter = "none";
   // clean up the message under the search box
   let messageHolder = document.querySelector("#search-message");
   messageHolder.classList.add("d-none");
@@ -408,7 +409,7 @@ function updateProjects(category) {
   });
   // go through project list and cull based on criteria
   projectList.forEach(function (proj, idx) {
-    projectIds.push(proj.id);
+    //projectIds.push(proj.id);
     let pString = "#project-holder-" + projectList[idx].id; //(idx + 1);
     let pDisplay = document.querySelector(pString);
     // console.log(
@@ -420,6 +421,12 @@ function updateProjects(category) {
     //     " should = " +
     //     category
     // );
+    console.log(
+      proj.category.toUpperCase() == category.toUpperCase(),
+      category == "all",
+      proj.project_name.toUpperCase().includes(filter),
+      proj.project_description.toUpperCase().includes(filter)
+    );
     if (
       proj.category.toUpperCase() == category.toUpperCase() ||
       category == "all" ||
