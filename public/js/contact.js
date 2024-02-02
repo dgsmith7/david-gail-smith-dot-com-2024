@@ -18,14 +18,14 @@
 
   function sendTheEmail() {
     let obj = {
-      sub: "Someone submitted aa art contact form - davidgailsmith.com!",
+      sub: "Contact form - davidgailsmith.com!",
       txt: `${document.querySelector("#contact-first").value} ${
         document.querySelector("#contact-middle").value
       } ${
         document.querySelector("#contact-last").value
       } sent you a message that reads ${
         document.querySelector("#contact-question").value
-      }. They're email address is ${
+      }. Their email address is ${
         document.querySelector("#contact-email-addr").value
       }`,
     };
