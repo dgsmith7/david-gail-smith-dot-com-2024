@@ -312,12 +312,12 @@ function sendTheEmail() {
   let obj = {
     sub: `${document.querySelector("#contact-first").value} ${
       document.querySelector("#contact-last").value
-    } from NFT mint contact form!`,
+    } from Art site contact form!`,
     txt: `${document.querySelector("#contact-first").value} ${
       document.querySelector("#contact-last").value
-    } sent you a message from the contact form on the NFT mint that reads as so: \n${
+    } sent you a message from the contact form on the Art site that reads as so: \n${
       document.querySelector("#contact-message").value
-    }\nThey're email address is ${
+    }\nTheir email address is ${
       document.querySelector("#contact-email").value
     }`,
     ftb: document.querySelector("#ftb").value == "",
