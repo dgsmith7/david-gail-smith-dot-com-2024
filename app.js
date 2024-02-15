@@ -46,10 +46,9 @@ app.get("/", async (req, res, next) => {
     .catch(next);
 });
 
-// app.get("/login", async (req, res) => {
-//   console.log("Im in ");
-//   res.render("sign-in.ejs");
-// });
+app.get("/owl", (req, res) => {
+  res.render("owl.ejs");
+});
 
 app.post("/mail", async (req, res) => {
   if (req.body.ftb == true) {

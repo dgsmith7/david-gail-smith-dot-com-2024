@@ -26,7 +26,12 @@ footer {
   }
 }
 
-card {
+.proj-img {
+  min-height: 100px;
+  aspect-ratio: 1.0;
+}
+
+.card {
   min-height: 400px;
 }
 
