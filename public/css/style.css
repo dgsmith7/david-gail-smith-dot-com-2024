@@ -26,14 +26,18 @@ footer {
   }
 }
 
+.card-footer,
+.card-title {
+  min-height: 50px;
+}
+
 .proj-img {
-  min-height: 150px;
-  max-height: 300px;
+  max-height: 400px;
   aspect-ratio: 1;
 }
 
 .card {
-  min-height: 400px;
+  height: 400px;
 }
 
 #error-space {
