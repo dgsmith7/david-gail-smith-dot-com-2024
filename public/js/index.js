@@ -122,7 +122,7 @@ async function connectWallet() {
   //   connect.innerHTML = "Please connect MetaMask";
   //   isConnected = false;
   // }
-  console.log("set up auth!");
+  //console.log("set up auth!");
 }
 
 // dark mode functionality
