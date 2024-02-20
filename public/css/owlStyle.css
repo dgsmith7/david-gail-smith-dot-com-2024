@@ -193,3 +193,7 @@ card {
   height: 15vw;
   object-fit: cover;
 }
+
+.card-link {
+  background-color: #ffffff;
+}
