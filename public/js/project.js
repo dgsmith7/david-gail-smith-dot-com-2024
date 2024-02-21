@@ -1,7 +1,7 @@
 export let projectCode = `
 <div class="fs-2 justify-content-center script-text">Selected Project</div>
   <div class="row justify-content-center">
-    <div class="col-12 col-lg-5 mb-6 p-3 justify-content-center">
+    <div class="col-12 col-lg-5 mb-6 p-0 justify-content-center">
       <div class="row justify-content-center">
         <div class="col-12 mt-4">
           <div class="card h-100 m-0 shadow-lg bhf-light">
