@@ -4,10 +4,10 @@ export let projectCode = `
     <div class="col-12 col-lg-5 mb-6 p-3 justify-content-center">
       <div class="row justify-content-center">
         <div class="col-12 mt-4">
-          <div class="card m-1 shadow-lg bhf-light">
-            <img src=<%= project.img_url  %> class="card-img-top" alt="..." />
-            <div class="title-box">
-              <div class="card-title">
+          <div class="card h-100 m-1 shadow-lg bhf-light">
+            <img src="<%= project.img_url  %>" class="card-img-top" alt="..." >
+            <div class="title-box border-0">
+              <div class="card-title border-0">
                 <p class="h3 m-2">
                   <strong>
                     <%=project.project_name  %>
@@ -19,7 +19,7 @@ export let projectCode = `
                 <p><%= project.price  %></p>
               </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer border-0">
             <a href="/#contact" id="add-anchor"><button id="add-button" class="buttons-mint buttons-light btn btn-outline-light">Contact Artist to Purchase</button></a>
               <div id="project-id" class="d-none"><%= project.id %></div>
             </div>
