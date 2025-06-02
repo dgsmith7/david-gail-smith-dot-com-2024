@@ -10,11 +10,13 @@
 
 /* Special handling for dark mode */
 .bhf-dark #vob {
-  filter: brightness(2) !important; /* Make it significantly brighter in dark mode */
+  filter: brightness(
+    2
+  ) !important; /* Make it significantly brighter in dark mode */
 }
 
 /* Make footer links visible in dark mode */
-.bhf-dark a, 
+.bhf-dark a,
 footer.bhf-dark a,
 .bhf-dark .text-dark,
 footer.bhf-dark .text-dark {
@@ -22,7 +24,7 @@ footer.bhf-dark .text-dark {
 }
 
 /* Hover state for footer links */
-.bhf-dark a:hover, 
+.bhf-dark a:hover,
 footer.bhf-dark a:hover,
 .bhf-dark .text-dark:hover,
 footer.bhf-dark .text-dark:hover {
@@ -49,5 +51,5 @@ footer.bhf-dark a.text-decoration-none {
 /* Fix for social media icons color */
 .bhf-dark footer svg.logo-light,
 footer.bhf-dark svg.logo-light {
-  fill: #57c9c9 !important; 
+  fill: #57c9c9 !important;
 }

@@ -223,3 +223,44 @@ footer {
   src: url(https://fonts.gstatic.com/s/rocksalt/v18/MwQ0bhv11fWD6QsAVOZrt0M6.woff2)
     format("woff2");
 }
+
+/* Footer Images and Links */
+#vob {
+  max-height: 35px;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 5px;
+}
+
+.bhf-dark #vob,
+footer.bhf-dark #vob {
+  filter: brightness(2) !important;
+}
+
+/* Dark mode footer links */
+footer.bhf-dark a,
+.bhf-dark footer a,
+footer.bhf-dark a.text-dark,
+.bhf-dark footer a.text-dark {
+  color: #57c9c9 !important; 
+}
+
+footer.bhf-dark a:hover,
+.bhf-dark footer a:hover,
+footer.bhf-dark a.text-dark:hover,
+.bhf-dark footer a.text-dark:hover {
+  color: #6ac29d !important;
+  text-decoration: underline;
+}
+
+.bhf-dark footer svg,
+footer.bhf-dark svg {
+  fill: #57c9c9;
+}
+
+/* Make social media icons visible in dark mode */
+.bhf-dark footer svg.logo-light,
+footer.bhf-dark svg.logo-light {
+  fill: #00cc00;
+}

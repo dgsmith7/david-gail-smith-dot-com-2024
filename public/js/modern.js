@@ -75,12 +75,34 @@ function enableDarkMode() {
     vobImg.style.filter = "brightness(2)";
     vobImg.style.display = "inline-block";
     vobImg.style.visibility = "visible";
+    
+    // Try different image paths if needed
+    if (!vobImg.complete || vobImg.naturalHeight === 0) {
+      const possiblePaths = [
+        './images/VOB-logo-transparent.png',
+        '/images/VOB-logo-transparent.png',
+        '../images/VOB-logo-transparent.png'
+      ];
+      
+      // Try first alternative path
+      vobImg.src = possiblePaths[0];
+    }
   }
 
-  // Ensure footer links are visible
-  const footerLinks = document.querySelectorAll("footer a, footer .text-dark");
-  footerLinks.forEach((link) => {
+  // Apply dark mode to footer elements
+  const footerLinks = document.querySelectorAll("footer a.text-dark, footer a.text-decoration-none");
+  footerLinks.forEach(link => {
     link.style.color = "#57c9c9";
+  });
+
+  // Apply dark mode to social media icons
+  const socialIcons = document.querySelectorAll("footer svg.logo-light");
+  socialIcons.forEach(icon => {
+    if (icon.id !== "footer-logo") {
+      icon.style.fill = "#00cc00";
+    } else {
+      icon.style.fill = "#cccccc";
+    }
   });
 
   // Apply classes to elements
@@ -134,9 +156,19 @@ function disableDarkMode() {
   }
 
   // Reset footer links
-  const footerLinks = document.querySelectorAll("footer a, footer .text-dark");
-  footerLinks.forEach((link) => {
+  const footerLinks = document.querySelectorAll("footer a.text-dark, footer a.text-decoration-none");
+  footerLinks.forEach(link => {
     link.style.color = "";
+  });
+
+  // Reset social media icons
+  const socialIcons = document.querySelectorAll("footer svg.logo-light");
+  socialIcons.forEach(icon => {
+    if (icon.id !== "footer-logo") {
+      icon.style.fill = "#00cc00";
+    } else {
+      icon.style.fill = "#000000";
+    }
   });
 
   // Apply classes to elements
