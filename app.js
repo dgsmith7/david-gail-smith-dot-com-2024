@@ -67,7 +67,7 @@ app.set("view engine", "ejs");
 // Routes
 app.get("/", async (req, res, next) => {
   try {
-    res.render("index-clean.ejs", {
+    res.render("index.ejs", {
       projects: projects,
       categories: categories,
     });
@@ -94,9 +94,10 @@ app.post("/mail", async (req, res) => {
 // Error handling middleware
 app.use(async (err, req, res, next) => {
   console.error("Application error:", err);
-  const msg = err.message === "No project with that ID" 
-    ? err.message 
-    : "There was an internal error. Apologies. We are working on cleaning up the mess. Please try again later.";
+  const msg =
+    err.message === "No project with that ID"
+      ? err.message
+      : "There was an internal error. Apologies. We are working on cleaning up the mess. Please try again later.";
   res.render("error.ejs", { msg: msg });
 });
 
