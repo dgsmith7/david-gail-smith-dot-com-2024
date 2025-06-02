@@ -9,8 +9,7 @@
     "dev": "npx nodemon app.js",
     "start": "node app.js",
     "export-db": "node utils/db-to-json.js",
-    "build": "node build-static.js",
-    "serve": "node static-server.js",
+    "build": "node build.js",
     "build:digitalocean": "npm install --production=false && npm run build && npm ci"
   },
   "repository": {
@@ -26,12 +25,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.2",
-    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "mysql2": "^3.7.1",
     "nodemailer": "^6.9.8"
   },
   "devDependencies": {
+    "ejs": "^3.1.10",
+    "fs-extra": "^11.3.0",
     "nodemon": "^3.0.3"
   },
   "keywords": []
