@@ -3,12 +3,10 @@ import { projectCode } from "./project.js";
 
 ("use strict");
 
-// Don't initialize dark mode here if using modern.js
-// Instead, check if modern.js is loaded
-if (typeof initDarkMode !== 'function') {
-  //dark mode
+// Initialize dark mode if modern.js isn't loaded
+if (typeof initDarkMode !== "function") {
   setDarkMode();
-  document.querySelector("#dark-mode-switch").addEventListener("click", () => {
+  document.querySelector("#dark-mode-switch")?.addEventListener("click", () => {
     toggleDarkMode();
   });
 }
@@ -60,6 +58,7 @@ formReset.addEventListener("click", (event) => {
   resetForm();
 });
 
+// Enhanced to handle dark mode properly
 function setProjectView() {
   let proj = sessionStorage.getItem("selected");
   if (proj == null || proj == "" || proj === "NaN") {
@@ -67,17 +66,18 @@ function setProjectView() {
     sessionStorage.setItem("selected", proj.toString());
   }
   doProject(parseInt(proj));
-  
-  // Apply current dark mode setting after loading project
-  if (typeof initDarkMode === 'function') {
-    // Use modern.js approach
-    if (localStorage.getItem("darkMode") === "true") {
+
+  // Apply dark mode after loading project
+  if (typeof initDarkMode === "function") {
+    // Modern.js approach
+    const darkModeSetting = sessionStorage.getItem("dm");
+    if (darkModeSetting === "dark") {
       enableDarkMode();
     } else {
       disableDarkMode();
     }
   } else {
-    // Use legacy approach
+    // Legacy approach
     setDarkMode();
   }
 }

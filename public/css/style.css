@@ -31,11 +31,13 @@ footer {
   min-height: 50px;
 }
 
+/* Fix image aspect ratio issues */
 .proj-img {
   width: 100%;
   min-height: 350px;
-  max-height: 20vw;
-  object-fit: cover;
+  max-height: 25vw;
+  object-fit: cover; /* Maintain aspect ratio */
+  object-position: center; /* Center the image */
 }
 
 .card {
@@ -196,8 +198,28 @@ footer {
   transition: 1500ms;
 }
 
-.card-img-top.not-main {
+.card-img-top {
   width: 100%;
-  height: 15vw;
-  object-fit: cover;
+  height: 250px;
+  object-fit: cover; /* Maintain aspect ratio */
+  object-position: center; /* Center the image */
+}
+
+/* Font declaration */
+@font-face {
+  font-family: "Jura";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/jura/v24/z7NOdRfiaC4Vd8hhoPzfb5vBTP1d7ZumR_g.woff2)
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Rock Salt";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/rocksalt/v18/MwQ0bhv11fWD6QsAVOZrt0M6.woff2)
+    format("woff2");
 }
