@@ -101,6 +101,6 @@ app.use(async (err, req, res, next) => {
   res.render("error.ejs", { msg: msg });
 });
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`David Gail Smith website listening on port ${port}`);
 });
