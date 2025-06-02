@@ -1,0 +1,45 @@
+/**
+ * CSS fixes for specific elements and dark mode issues
+ */
+
+/* Footer links visibility in dark mode */
+.bhf-dark a.n-list-dark,
+.bhf-dark footer a,
+footer.bhf-dark a {
+  color: #57c9c9 !important; /* Match --color-dark-secondary */
+  text-decoration: none;
+}
+
+.bhf-dark a.n-list-dark:hover,
+.bhf-dark footer a:hover,
+footer.bhf-dark a:hover {
+  color: #6ac29d !important; /* Match --color-dark-accent */
+  text-decoration: underline;
+}
+
+/* Fix for veteran owned business image */
+#vob {
+  max-height: 35px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Brighten image in dark mode */
+.bhf-dark #vob,
+footer.bhf-dark #vob {
+  filter: brightness(1.5);
+  opacity: 0.9;
+}
+
+/* Make all footer images visible */
+footer img {
+  display: inline-block;
+  vertical-align: middle;
+  opacity: 0.9;
+}
+
+/* Fix dark mode contrast for footer content */
+footer.bhf-dark .n-list-dark,
+footer.bhf-dark .copyright {
+  color: #cccccc !important; /* Match --color-dark-text */
+}

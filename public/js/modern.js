@@ -68,6 +68,13 @@ function enableDarkMode() {
     searchTerm.classList.remove("buttons-light");
   }
 
+  // Make sure the veteran owned business image in the footer is visible
+  const vobImg = document.querySelector("#vob");
+  if (vobImg) {
+    vobImg.style.opacity = "1";
+    vobImg.style.filter = "brightness(1.5)";
+  }
+
   // Apply classes to elements
   applyClassesToElements("a", "n-list-dark", "n-list-light");
   applyClassesToElements("strong", "n-list-dark", "n-list-light");
@@ -107,6 +114,13 @@ function disableDarkMode() {
   if (searchTerm) {
     searchTerm.classList.remove("buttons-dark");
     searchTerm.classList.add("buttons-light");
+  }
+
+  // Reset the veteran owned business image in the footer
+  const vobImg = document.querySelector("#vob");
+  if (vobImg) {
+    vobImg.style.opacity = "";
+    vobImg.style.filter = "";
   }
 
   // Apply classes to elements
