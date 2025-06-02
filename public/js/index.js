@@ -3,11 +3,15 @@ import { projectCode } from "./project.js";
 
 ("use strict");
 
-//dark mode
-setDarkMode();
-document.querySelector("#dark-mode-switch").addEventListener("click", () => {
-  toggleDarkMode();
-});
+// Don't initialize dark mode here if using modern.js
+// Instead, check if modern.js is loaded
+if (typeof initDarkMode !== 'function') {
+  //dark mode
+  setDarkMode();
+  document.querySelector("#dark-mode-switch").addEventListener("click", () => {
+    toggleDarkMode();
+  });
+}
 
 let projectList = JSON.parse(document.querySelector("#projects").innerHTML);
 let isConnected = false;
@@ -63,6 +67,19 @@ function setProjectView() {
     sessionStorage.setItem("selected", proj.toString());
   }
   doProject(parseInt(proj));
+  
+  // Apply current dark mode setting after loading project
+  if (typeof initDarkMode === 'function') {
+    // Use modern.js approach
+    if (localStorage.getItem("darkMode") === "true") {
+      enableDarkMode();
+    } else {
+      disableDarkMode();
+    }
+  } else {
+    // Use legacy approach
+    setDarkMode();
+  }
 }
 
 // build project buttons

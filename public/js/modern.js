@@ -3,7 +3,7 @@
  */
 
 // DOM Elements
-const darkModeToggle = document.querySelector("#dark-mode-toggle");
+const darkModeToggle = document.querySelector("#dark-mode-switch"); // Changed from #dark-mode-toggle to #dark-mode-switch
 const body = document.body;
 // Access projects data from the global window.appData object
 const projectsData =
@@ -37,21 +37,64 @@ function initDarkMode() {
   }
 
   // Set up event listener for dark mode toggle
-  darkModeToggle.addEventListener("click", toggleDarkMode);
+  darkModeToggle?.addEventListener("click", toggleDarkMode);
 }
 
 function enableDarkMode() {
-  body.classList.add("dark-mode");
+  body.classList.add("bhf-dark");
+  body.classList.remove("bhf-light");
+  document.querySelector("#header")?.classList.add("bhf-dark");
+  document.querySelector("#header")?.classList.remove("bhf-light");
+  document.querySelector("#footer")?.classList.add("bhf-dark");
+  document.querySelector("#footer")?.classList.remove("bhf-light");
+
+  // Apply dark mode to various elements
+  applyClassesToElements("a", "n-list-dark", "n-list-light");
+  applyClassesToElements("strong", "n-list-dark", "n-list-light");
+  applyClassesToElements("label", "n-list-dark", "n-list-light");
+  applyClassesToElements("button", "buttons-dark", "buttons-light");
+  applyClassesToElements("svg", "logo-dark", "logo-light");
+  applyClassesToElements(".card-footer", "bhf-dark", "bhf-light");
+  applyClassesToElements(".title-box", "bhf-dark", "bhf-light");
+  applyClassesToElements(".card", "buttons-dark", "buttons-light");
+
   localStorage.setItem("darkMode", "true");
+  if (darkModeToggle) darkModeToggle.checked = true;
 }
 
 function disableDarkMode() {
-  body.classList.remove("dark-mode");
+  body.classList.remove("bhf-dark");
+  body.classList.add("bhf-light");
+  document.querySelector("#header")?.classList.remove("bhf-dark");
+  document.querySelector("#header")?.classList.add("bhf-light");
+  document.querySelector("#footer")?.classList.remove("bhf-dark");
+  document.querySelector("#footer")?.classList.add("bhf-light");
+
+  // Apply light mode to various elements
+  applyClassesToElements("a", "n-list-light", "n-list-dark");
+  applyClassesToElements("strong", "n-list-light", "n-list-dark");
+  applyClassesToElements("label", "n-list-light", "n-list-dark");
+  applyClassesToElements("button", "buttons-light", "buttons-dark");
+  applyClassesToElements("svg", "logo-light", "logo-dark");
+  applyClassesToElements(".card-footer", "bhf-light", "bhf-dark");
+  applyClassesToElements(".title-box", "bhf-light", "bhf-dark");
+  applyClassesToElements(".card", "buttons-light", "buttons-dark");
+
   localStorage.setItem("darkMode", "false");
+  if (darkModeToggle) darkModeToggle.checked = false;
+}
+
+// Helper function to apply classes to multiple elements
+function applyClassesToElements(selector, addClass, removeClass) {
+  const elements = document.querySelectorAll(selector);
+  elements.forEach((element) => {
+    element.classList.add(addClass);
+    element.classList.remove(removeClass);
+  });
 }
 
 function toggleDarkMode() {
-  if (body.classList.contains("dark-mode")) {
+  if (body.classList.contains("bhf-dark")) {
     disableDarkMode();
   } else {
     enableDarkMode();
