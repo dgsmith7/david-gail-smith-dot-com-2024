@@ -1,0 +1,46 @@
+name: Deploy to Digital Ocean
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          # Build Docker image
+          docker build -t registry.digitalocean.com/dgs-registry/davidgailsmith:$(echo $GITHUB_SHA | head -c7) .
+
+          # Log in to DO Container Registry
+          doctl registry login
+
+          # Push image to DO Container Registry
+          docker push registry.digitalocean.com/dgs-registry/davidgailsmith:$(echo $GITHUB_SHA | head -c7)
+
+      - name: Update App Platform deployment
+        run: |
+          # Update the app with new image
+          doctl apps update ${{ secrets.DO_APP_ID }} --spec .do/app.yaml --image-updates davidgailsmithapp=registry.digitalocean.com/dgs-registry/davidgailsmith:$(echo $GITHUB_SHA | head -c7)
