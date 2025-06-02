@@ -12,8 +12,8 @@
   --color-card-shadow: rgba(0, 0, 0, 0.1);
 
   /* Dark mode colors */
-  --color-dark-background: #121212;
-  --color-dark-text: #e0e0e0;
+  --color-dark-background: #0f0f23;
+  --color-dark-text: #cccccc;
   --color-dark-primary: #4e56c3;
   --color-dark-secondary: #57c9c9;
   --color-dark-accent: #6ac29d;
@@ -194,9 +194,16 @@ header {
   box-shadow: 0 8px 24px var(--color-card-shadow);
 }
 
+/* Card Images - Fix aspect ratio issues */
 .card-img-top {
   width: 100%;
   height: 250px;
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+.card-img-top.not-main {
+  width: 100%;
+  height: 15vw;
   object-fit: cover;
 }
 
@@ -284,12 +291,12 @@ header {
   animation-fill-mode: forwards;
 }
 
-/* Project Images */
+/* Project Images - Fix aspect ratio issues */
 .proj-img {
   width: 100%;
   min-height: 250px;
-  max-height: 20vw;
-  object-fit: cover;
+  max-height: 25vw;
+  object-fit: cover; /* Maintain aspect ratio */
 }
 
 /* Hero Section */
@@ -321,6 +328,33 @@ footer .navbar {
   justify-content: flex-end;
   align-items: center;
   gap: var(--space-md);
+}
+
+/* Footer links specific styling to ensure visibility */
+footer a,
+footer a.n-list-dark,
+.bhf-dark a {
+  color: var(--color-dark-secondary);
+  transition: var(--transition-standard);
+}
+
+footer a:hover,
+footer a.n-list-dark:hover,
+.bhf-dark a:hover {
+  color: var(--color-dark-accent);
+  text-decoration: underline;
+}
+
+/* Veteran owned business image */
+#vob,
+#avatar {
+  max-height: 35px;
+  display: inline-block;
+}
+
+/* Make sure the image is visible in dark mode */
+.bhf-dark #vob {
+  filter: brightness(1.5); /* Brighten the image in dark mode */
 }
 
 .copyright {
@@ -364,18 +398,68 @@ footer .navbar {
   transition: var(--transition-standard);
 }
 
+/* Dark Mode Classes (needed for compatibility) */
+.bhf-dark {
+  background-color: var(--color-dark-background);
+  color: var(--color-dark-text);
+  transition: 1500ms;
+}
+
+.bhf-light {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: 1500ms;
+}
+
+.n-list-dark {
+  color: var(--color-dark-text);
+  transition: 1500ms;
+}
+
+.n-list-light {
+  color: var(--color-text);
+  transition: 1500ms;
+}
+
+.buttons-dark {
+  color: var(--color-dark-text);
+  border-color: var(--color-dark-text);
+  background: var(--color-dark-background);
+  transition: 1500ms;
+}
+
+.buttons-light {
+  color: var(--color-text);
+  border-color: var(--color-text);
+  background: var(--color-card-bg);
+  transition: 1500ms;
+}
+
+.logo-dark {
+  fill: var(--color-dark-text);
+  transition: 1500ms;
+}
+
+.logo-light {
+  fill: var(--color-text);
+  transition: 1500ms;
+}
+
 /* Dark Mode */
-.dark-mode {
+.dark-mode,
+body.bhf-dark {
   background-color: var(--color-dark-background);
   color: var(--color-dark-text);
 }
 
 .dark-mode header,
-.dark-mode footer {
+.dark-mode footer,
+footer.bhf-dark {
   background-color: var(--color-dark-background);
 }
 
-.dark-mode footer {
+.dark-mode footer,
+footer.bhf-dark {
   border-top-color: var(--color-dark-muted);
 }
 
@@ -418,6 +502,41 @@ footer .navbar {
   background-color: var(--color-dark-card-bg);
   color: var(--color-dark-text);
   border: 1px solid var(--color-dark-muted);
+}
+
+/* Fonts */
+body,
+.bhf-light {
+  font-family: "Jura", sans-serif;
+}
+
+.script-text {
+  font-family: "Rock Salt", cursive;
+}
+
+.mono-text {
+  font-family: "Share Tech Mono", monospace;
+}
+
+/* Ensure consistent styling for contact form and input fields */
+.contact-form-light input,
+.contact-form-light textarea {
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  color: #000000;
+  transition: 1500ms;
+}
+
+.contact-form-dark input,
+.contact-form-dark textarea,
+.contact-form-dark input:hover,
+.contact-form-dark textarea:hover,
+.contact-form-dark input:focus,
+.contact-form-dark textarea:focus {
+  background-color: #0f0f23;
+  border: 2px solid #cccccc;
+  color: #cccccc;
+  transition: 1500ms;
 }
 
 /* Responsive adjustments */

@@ -3,7 +3,7 @@
  */
 
 // DOM Elements
-const darkModeToggle = document.querySelector("#dark-mode-toggle");
+const darkModeToggle = document.querySelector("#dark-mode-switch");
 const body = document.body;
 // Access projects data from the global window.appData object
 const projectsData =
@@ -20,11 +20,11 @@ const resetFormButton = document.querySelector("#contact-button-response");
 
 // Dark Mode Functions
 function initDarkMode() {
-  // Check for saved user preference
-  const savedDarkMode = localStorage.getItem("darkMode");
+  // Check for saved user preference from sessionStorage (to match index.js/owl.js)
+  const savedDarkMode = sessionStorage.getItem("dm");
 
-  // Set initial state based on saved preference or system preference
-  if (savedDarkMode === "true") {
+  // Set initial state based on saved preference
+  if (savedDarkMode === "dark") {
     enableDarkMode();
   } else if (savedDarkMode === null) {
     // If no saved preference, check system preference
@@ -33,25 +33,172 @@ function initDarkMode() {
     ).matches;
     if (prefersDarkMode) {
       enableDarkMode();
+    } else {
+      disableDarkMode(); // Explicitly set light mode
     }
   }
 
   // Set up event listener for dark mode toggle
-  darkModeToggle.addEventListener("click", toggleDarkMode);
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener("click", toggleDarkMode);
+  }
 }
 
 function enableDarkMode() {
-  body.classList.add("dark-mode");
-  localStorage.setItem("darkMode", "true");
+  body.classList.add("bhf-dark");
+  body.classList.remove("bhf-light");
+
+  // Apply dark mode to various elements
+  document.querySelector("#header")?.classList.add("bhf-dark");
+  document.querySelector("#header")?.classList.remove("bhf-light");
+  document.querySelector("#footer")?.classList.add("bhf-dark");
+  document.querySelector("#footer")?.classList.remove("bhf-light");
+
+  // Apply dark mode to contact form if it exists
+  const contactForm = document.querySelector("#contact-form");
+  if (contactForm) {
+    contactForm.classList.add("contact-form-dark");
+    contactForm.classList.remove("contact-form-light");
+  }
+
+  // Apply dark mode to search term field if it exists
+  const searchTerm = document.querySelector("#search-term");
+  if (searchTerm) {
+    searchTerm.classList.add("buttons-dark");
+    searchTerm.classList.remove("buttons-light");
+  }
+
+  // Make sure the veteran owned business image in the footer is visible
+  const vobImg = document.querySelector("#vob");
+  if (vobImg) {
+    vobImg.style.opacity = "1";
+    vobImg.style.filter = "brightness(2)";
+    vobImg.style.display = "inline-block";
+    vobImg.style.visibility = "visible";
+    
+    // Try different image paths if needed
+    if (!vobImg.complete || vobImg.naturalHeight === 0) {
+      const possiblePaths = [
+        './images/VOB-logo-transparent.png',
+        '/images/VOB-logo-transparent.png',
+        '../images/VOB-logo-transparent.png'
+      ];
+      
+      // Try first alternative path
+      vobImg.src = possiblePaths[0];
+    }
+  }
+
+  // Apply dark mode to footer elements
+  const footerLinks = document.querySelectorAll("footer a.text-dark, footer a.text-decoration-none");
+  footerLinks.forEach(link => {
+    link.style.color = "#57c9c9";
+  });
+
+  // Apply dark mode to social media icons
+  const socialIcons = document.querySelectorAll("footer svg.logo-light");
+  socialIcons.forEach(icon => {
+    if (icon.id !== "footer-logo") {
+      icon.style.fill = "#00cc00";
+    } else {
+      icon.style.fill = "#cccccc";
+    }
+  });
+
+  // Apply classes to elements
+  applyClassesToElements("a", "n-list-dark", "n-list-light");
+  applyClassesToElements("strong", "n-list-dark", "n-list-light");
+  applyClassesToElements("label", "n-list-dark", "n-list-light");
+  applyClassesToElements("button", "buttons-dark", "buttons-light");
+  applyClassesToElements("svg", "logo-dark", "logo-light");
+  applyClassesToElements(".card-footer", "bhf-dark", "bhf-light");
+  applyClassesToElements(".title-box", "bhf-dark", "bhf-light");
+  applyClassesToElements(".card", "buttons-dark", "buttons-light");
+
+  // Store preference - use sessionStorage to match other JS files
+  sessionStorage.setItem("dm", "dark");
+
+  // Update the toggle switch
+  if (darkModeToggle) darkModeToggle.checked = true;
 }
 
 function disableDarkMode() {
-  body.classList.remove("dark-mode");
-  localStorage.setItem("darkMode", "false");
+  body.classList.remove("bhf-dark");
+  body.classList.add("bhf-light");
+
+  // Apply light mode to various elements
+  document.querySelector("#header")?.classList.remove("bhf-dark");
+  document.querySelector("#header")?.classList.add("bhf-light");
+  document.querySelector("#footer")?.classList.remove("bhf-dark");
+  document.querySelector("#footer")?.classList.add("bhf-light");
+
+  // Apply light mode to contact form if it exists
+  const contactForm = document.querySelector("#contact-form");
+  if (contactForm) {
+    contactForm.classList.remove("contact-form-dark");
+    contactForm.classList.add("contact-form-light");
+  }
+
+  // Apply light mode to search term field if it exists
+  const searchTerm = document.querySelector("#search-term");
+  if (searchTerm) {
+    searchTerm.classList.remove("buttons-dark");
+    searchTerm.classList.add("buttons-light");
+  }
+
+  // Reset the veteran owned business image in the footer
+  const vobImg = document.querySelector("#vob");
+  if (vobImg) {
+    vobImg.style.opacity = "1";
+    vobImg.style.filter = "";
+    vobImg.style.display = "inline-block";
+    vobImg.style.visibility = "visible";
+  }
+
+  // Reset footer links
+  const footerLinks = document.querySelectorAll("footer a.text-dark, footer a.text-decoration-none");
+  footerLinks.forEach(link => {
+    link.style.color = "";
+  });
+
+  // Reset social media icons
+  const socialIcons = document.querySelectorAll("footer svg.logo-light");
+  socialIcons.forEach(icon => {
+    if (icon.id !== "footer-logo") {
+      icon.style.fill = "#00cc00";
+    } else {
+      icon.style.fill = "#000000";
+    }
+  });
+
+  // Apply classes to elements
+  applyClassesToElements("a", "n-list-light", "n-list-dark");
+  applyClassesToElements("strong", "n-list-light", "n-list-dark");
+  applyClassesToElements("label", "n-list-light", "n-list-dark");
+  applyClassesToElements("button", "buttons-light", "buttons-dark");
+  applyClassesToElements("svg", "logo-light", "logo-dark");
+  applyClassesToElements(".card-footer", "bhf-light", "bhf-dark");
+  applyClassesToElements(".title-box", "bhf-light", "bhf-dark");
+  applyClassesToElements(".card", "buttons-light", "buttons-dark");
+
+  // Store preference - use sessionStorage to match other JS files
+  sessionStorage.setItem("dm", "light");
+
+  // Update the toggle switch
+  if (darkModeToggle) darkModeToggle.checked = false;
+}
+
+// Helper function to apply classes to multiple elements
+function applyClassesToElements(selector, addClass, removeClass) {
+  const elements = document.querySelectorAll(selector);
+  elements.forEach((element) => {
+    element.classList.add(addClass);
+    element.classList.remove(removeClass);
+  });
 }
 
 function toggleDarkMode() {
-  if (body.classList.contains("dark-mode")) {
+  if (body.classList.contains("bhf-dark")) {
     disableDarkMode();
   } else {
     enableDarkMode();
