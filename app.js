@@ -3,15 +3,16 @@ import * as utils from "./utils/utils.js";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
-dotenv.config();
 import cors from "cors";
 import { fileURLToPath } from "url";
+
+dotenv.config();
 
 // Get directory name in ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load projects from JSON file
+// Load projects and categories from JSON files
 let projects = [];
 let categories = [];
 
@@ -22,22 +23,22 @@ try {
   );
   projects = JSON.parse(projectsData);
 
-  // Add formatted price strings if they don't exist
+  // Ensure price formatting is consistent
   projects.forEach((item) => {
     if (!item.price_formatted) {
-      let p = item.price;
-      if (p == -1) {
+      let p = parseFloat(item.price);
+      if (p === -1) {
         item.price_formatted = "Not for sale";
-      } else if (p == 0) {
+      } else if (p === 0) {
         item.price_formatted = "Contact me for price please.";
       } else {
-        item.price_formatted = "$" + item.price + " + tax and shipping";
+        item.price_formatted = `$${item.price} + tax and shipping`;
       }
     }
     item.price = item.price_formatted;
   });
 
-  // Load categories if available
+  // Load categories
   try {
     const categoriesData = fs.readFileSync(
       path.join(__dirname, "data", "categories.json"),
@@ -45,7 +46,7 @@ try {
     );
     categories = JSON.parse(categoriesData);
   } catch (err) {
-    console.log("No categories file found, will derive from projects");
+    console.log("No categories file found, deriving from projects");
     categories = [...new Set(projects.map((project) => project.category))];
   }
 } catch (err) {
@@ -54,19 +55,19 @@ try {
   categories = [];
 }
 
-const contracts = [];
-
 const app = express();
-app.use(cors({ methods: ["GET", "POST"] }));
 const port = process.env.PORT || 3000;
-app.set("view engine", "ejs");
+
+// Middleware
+app.use(cors({ methods: ["GET", "POST"] }));
 app.use(express.json());
 app.use(express.static("public"));
+app.set("view engine", "ejs");
 
+// Routes
 app.get("/", async (req, res, next) => {
   try {
-    res.render("index.ejs", {
-      contracts: contracts,
+    res.render("index-clean.ejs", {
       projects: projects,
       categories: categories,
     });
@@ -76,28 +77,26 @@ app.get("/", async (req, res, next) => {
 });
 
 app.post("/mail", async (req, res) => {
-  if (req.body.ftb == true) {
-    await utils
-      .sendMessage(req.body.sub, req.body.txt)
-      .then(() => {
-        res.send({ result: "Success" });
-      })
-      .catch((error) => {
-        console.error("Error sending mail:", error);
-        res.send({ result: "Failure" });
-      });
+  // Simple honeypot spam protection
+  if (req.body.ftb === true) {
+    try {
+      await utils.sendMessage(req.body.sub, req.body.txt);
+      res.json({ result: "Success" });
+    } catch (error) {
+      console.error("Error sending mail:", error);
+      res.json({ result: "Failure" });
+    }
   } else {
-    res.send({ result: "No mail bots allowed" });
+    res.json({ result: "No mail bots allowed" });
   }
 });
 
+// Error handling middleware
 app.use(async (err, req, res, next) => {
   console.error("Application error:", err);
-  let msg = err.message;
-  if (msg != "No project with that ID") {
-    msg =
-      "There was an internal error. Apologies. We are working on cleaning up the mess. Please try again later.";
-  }
+  const msg = err.message === "No project with that ID" 
+    ? err.message 
+    : "There was an internal error. Apologies. We are working on cleaning up the mess. Please try again later.";
   res.render("error.ejs", { msg: msg });
 });
 

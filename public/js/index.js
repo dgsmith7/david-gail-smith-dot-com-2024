@@ -3,59 +3,87 @@ import { projectCode } from "./project.js";
 
 ("use strict");
 
-//dark mode
-setDarkMode();
-document.querySelector("#dark-mode-switch").addEventListener("click", () => {
-  toggleDarkMode();
+// Initialize application
+document.addEventListener("DOMContentLoaded", () => {
+  initializeApp();
 });
 
-let projectList = JSON.parse(document.querySelector("#projects").innerHTML);
-let isConnected = false;
-//let projectIds = [];
-let connect = document.querySelector("#login-button");
+function initializeApp() {
+  // Set dark mode on load
+  setDarkMode();
+  
+  // Dark mode toggle
+  document.querySelector("#dark-mode-switch").addEventListener("click", () => {
+    toggleDarkMode();
+  });
 
-// wallet connection (also see below)
-await connectWallet();
-// connect.addEventListener("click", async () => {
-//   logIn();
-//   //  await connectWallet();
-// });
-if (isConnected) {
+  // Load project data
+  const projectList = JSON.parse(document.querySelector("#projects").innerHTML);
+  window.projectList = projectList; // Make available globally
+  
+  buildProjectButtons();
+  setProjectView();
+  initializeContactForm();
+  initializeSearchAndFilters();
 }
-buildProjectButtons();
 
-// search box
-let searchBox = document.querySelector("#search-term");
-searchBox.addEventListener("keyup", (event) => {
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-  updateProjects("");
-});
+function initializeContactForm() {
+  // Contact form buttons
+  let form = document.querySelector("#contact-form");
+  document.querySelector("#send-contact").addEventListener("click", (event) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    validate();
+  });
 
-// set initial page view
-setProjectView();
+  let formReset = document.querySelector("#contact-button-response");
+  formReset.addEventListener("click", (event) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    resetForm();
+  });
+}
 
-// contact form buttons
-let form = document.querySelector("#contact-form");
-document.querySelector("#send-contact").addEventListener("click", (event) => {
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-  validate();
-});
+function initializeSearchAndFilters() {
+  // Search box
+  let searchBox = document.querySelector("#search-term");
+  searchBox.addEventListener("keyup", (event) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    updateProjects("");
+  });
 
-let formReset = document.querySelector("#contact-button-response");
-formReset.addEventListener("click", (event) => {
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-  resetForm();
-});
+  // Filter buttons
+  document.querySelector("#all-filter").addEventListener("click", () => {
+    updateProjects("all");
+  });
+  document.querySelector("#painting-filter").addEventListener("click", () => {
+    updateProjects("painting");
+  });
+  document.querySelector("#printmaking-filter").addEventListener("click", () => {
+    updateProjects("printmaking");
+  });
+  document.querySelector("#generative-filter").addEventListener("click", () => {
+    updateProjects("generative");
+  });
+  document.querySelector("#fabrication-filter").addEventListener("click", () => {
+    updateProjects("fabrication");
+  });
+  document.querySelector("#illustration-filter").addEventListener("click", () => {
+    updateProjects("illustration");
+  });
+  document.querySelector("#photography-filter").addEventListener("click", () => {
+    updateProjects("photography");
+  });
+}
 
+// Project view management
 function setProjectView() {
   let proj = sessionStorage.getItem("selected");
   if (proj == null || proj == "" || proj === "NaN") {
@@ -65,7 +93,6 @@ function setProjectView() {
   doProject(parseInt(proj));
 }
 
-// build project buttons
 function buildProjectButtons() {
   for (let i = 0; i < projectList.length; i++) {
     let id = "#b-" + projectList[i].id;
@@ -74,55 +101,6 @@ function buildProjectButtons() {
       setDarkMode();
     });
   }
-}
-
-document.querySelector("#all-filter").addEventListener("click", () => {
-  updateProjects("all");
-});
-document.querySelector("#painting-filter").addEventListener("click", () => {
-  updateProjects("painting");
-});
-document.querySelector("#printmaking-filter").addEventListener("click", () => {
-  updateProjects("printmaking");
-});
-document.querySelector("#generative-filter").addEventListener("click", () => {
-  updateProjects("generative");
-});
-document.querySelector("#fabrication-filter").addEventListener("click", () => {
-  updateProjects("fabrication");
-});
-document.querySelector("#illustration-filter").addEventListener("click", () => {
-  updateProjects("illustration");
-});
-document.querySelector("#photography-filter").addEventListener("click", () => {
-  updateProjects("photography");
-});
-
-// wallet connection (also see above)
-async function connectWallet() {
-  // if (typeof window.ethereum !== "undefined") {
-  //   try {
-  //     let chain = await ethereum.request({ method: "eth_chainId" });
-  //     if (chain == "0x66eee" || chain == "0xa4b1" || chain == "0x13881") {
-  //       await ethereum.request({ method: "eth_requestAccounts" });
-  //       connect.innerHTML = "Connected";
-  //       provider = new ethers.providers.Web3Provider(window.ethereum);
-  //       signer = provider.getSigner();
-  //       const accounts = await ethereum.request({ method: "eth_accounts" });
-  //       userAddress = "" + accounts[0];
-  //       let walletString =
-  //         userAddress.substring(0, 5) + "..." + userAddress.substring(38, 42);
-  //       isConnected = true;
-  //     }
-  //   } catch (error) {
-  //     connect.innerHTML = "Check Metamask/Network";
-  //     isConnected = false;
-  //   }
-  // } else {
-  //   connect.innerHTML = "Please connect MetaMask";
-  //   isConnected = false;
-  // }
-  //console.log("set up auth!");
 }
 
 // dark mode functionality
@@ -289,6 +267,7 @@ export function goLight() {
 // mail functionality
 function validate() {
   let formValid = true;
+  let form = document.querySelector("#contact-form");
   if (!form.checkValidity()) {
     formValid = false;
   }
@@ -380,22 +359,23 @@ async function doProject(id) {
 
 function updateProjects(category) {
   // init variables
-  //projectIds = [];
   let count = 0;
   let filter = document.getElementById("search-term").value.toUpperCase();
   if (filter == "") filter = "none";
+  
   // clean up the message under the search box
   let messageHolder = document.querySelector("#search-message");
   messageHolder.classList.add("d-none");
   messageHolder.classList.remove("d-inline");
+  
   // if there are no selectors - clear everything in search box
   if (category == "all" && document.getElementById("search-term").value != "") {
     document.getElementById("search-term").value = "";
     filter = "";
   }
+  
   const buttons = document.querySelectorAll(".filter-button");
   // adjust filter button visibility based on selected filter
-  //  if (category == "") category = "all";
   buttons.forEach(function (item) {
     let theID = item.id;
     if (
@@ -409,42 +389,17 @@ function updateProjects(category) {
       item.classList.add("d-none");
     }
   });
+  
   // go through project list and cull based on criteria
   projectList.forEach(function (proj, idx) {
-    //projectIds.push(proj.id);
-    let pString = "#project-holder-" + projectList[idx].id; //(idx + 1);
+    let pString = "#project-holder-" + projectList[idx].id;
     let pDisplay = document.querySelector(pString);
-    // console.log(
-    //   proj.project_name.toUpperCase() +
-    //     " should include " +
-    //     filter +
-    //     " and " +
-    //     proj.category.toUpperCase() +
-    //     " should = " +
-    //     category
-    // );
-    console.log(
-      proj.category.toUpperCase() == category.toUpperCase(),
-      category == "all",
-      proj.project_name.toUpperCase().includes(filter),
-      proj.project_description.toUpperCase().includes(filter)
-    );
+    
     if (
       proj.category.toUpperCase() == category.toUpperCase() ||
       category == "all" ||
       proj.project_name.toUpperCase().includes(filter) ||
       proj.project_description.toUpperCase().includes(filter)
-      //
-      // proj.category.toUpperCase() == category.toUpperCase() ||
-      // category == "all"
-      //
-      // proj.project_name.toUpperCase().includes(filter) ||
-      // proj.project_description.toUpperCase().includes(filter)
-      //
-      // (proj.project_name.toUpperCase().includes(filter) ||
-      //   proj.project_description.toUpperCase().includes(filter)) &&
-      // (proj.category.toUpperCase() == category.toUpperCase() ||
-      //   category == "all")
     ) {
       pDisplay.classList.add("d-inline");
       pDisplay.classList.remove("d-none");
@@ -454,6 +409,7 @@ function updateProjects(category) {
       pDisplay.classList.remove("d-inline");
     }
   });
+  
   if (count == 0) {
     messageHolder.classList.add("d-inline");
     messageHolder.classList.remove("d-none");
@@ -462,19 +418,3 @@ function updateProjects(category) {
     messageHolder.classList.remove("d-inline");
   }
 }
-
-// function logIn() {
-//   fetch("/login", {
-//     method: "GET",
-//     headers: {
-//       "Content-type": "application/json",
-//     },
-//   })
-//     // .then((r) => r.json())
-//     // .then((response) => {
-//     //   console.log(response);
-//     // })
-//     .catch((err) => {
-//       console.log("We were unable to log in due to an error - ", err);
-//     });
-// }
