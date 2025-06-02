@@ -1,36 +1,27 @@
 export let projectCode = `
-<div class="fs-2 justify-content-center script-text">Selected Project</div>
-  <div class="row justify-content-center">
-    <div class="col-12 col-lg-5 mb-6 p-0 justify-content-center">
-      <div class="row justify-content-center">
-        <div class="col-12 mt-4">
-          <div class="card h-100 m-0 shadow-lg bhf-light">
-            <img src="<%= project.img_url  %>" class="card-img-top" alt="..." >
-            <div class="title-box border-0">
-              <div class="card-title border-0">
-                <p class="h3 m-2">
-                  <strong>
-                    <%=project.project_name  %>
-                  </strong>
-                </p>
-                <p><%=project.medium  %></p>
-                <p><%= project.dimensions  %></p>
-                <p><%= project.frame  %></p>
-                <p><%= project.price  %></p>
-              </div>
-            </div>
-            <div class="card-footer border-0">
-            <a href="/#contact" id="add-anchor"><button id="add-button" class="buttons-mint buttons-light btn btn-outline-light">Contact Artist to Purchase</button></a>
-              <div id="project-id" class="d-none"><%= project.id %></div>
-            </div>
-          </div>
+<div class="selected-project-section">
+  <div class="fs-2 text-center script-text mb-4">Selected Project</div>
+  <div class="row justify-content-center align-items-start g-4">
+    <div class="col-12 col-lg-6 mb-4">
+      <div class="card selected-project-card shadow-lg h-100 m-0 p-0" style="max-width:700px;">
+        <img src="<%= project.img_url %>" class="card-img-top selected-project-img" alt="<%= project.project_name %>" style="max-height:520px; width:100%; object-fit:contain; background:#fff;">
+        <div class="card-body p-4">
+          <h3 class="card-title mb-2"><%= project.project_name %></h3>
+          <p class="card-text mb-1"><strong>Category:</strong> <%= project.category %></p>
+          <p class="card-text mb-0"><small class="text-muted">Created: <%= project.date_created %></small></p>
         </div>
       </div>
     </div>
-    <div class="col-10 col-lg-5 mt-2 p-3 text-start">
-      <p><h3 class="topic">Project name: </h3><%=project.project_name  %></p>
-      <p><h3 class="topic">Project description: </h3><%=project.project_description  %></p>
-      <p><h3 class="topic">Notes: </h3><p id="notes" ><%= project.notes  %></p>
+    <div class="col-12 col-lg-6 mb-4">
+      <div class="selected-project-details ps-lg-4">
+        <h4>Project Details</h4>
+        <p><strong>Description:</strong> <%= project.project_description ? project.project_description : '' %></p>
+        <p><strong>Medium:</strong> <%= project.medium ? project.medium : '' %></p>
+        <p><strong>Dimensions:</strong> <%= project.dimensions ? project.dimensions : '' %></p>
+        <p><strong>Frame:</strong> <%= project.frame ? project.frame : '' %></p>
+        <p><strong>Price:</strong> <%= project.price ? project.price : '' %></p>
+        <div id="notes"></div>
+      </div>
     </div>
   </div>
 </div>

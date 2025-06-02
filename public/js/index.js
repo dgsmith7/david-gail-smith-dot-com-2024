@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function initializeApp() {
   // Set dark mode on load
   setDarkMode();
-  
+
   // Dark mode toggle
   document.querySelector("#dark-mode-switch").addEventListener("click", () => {
     toggleDarkMode();
@@ -20,7 +20,7 @@ function initializeApp() {
   // Load project data
   const projectList = JSON.parse(document.querySelector("#projects").innerHTML);
   window.projectList = projectList; // Make available globally
-  
+
   buildProjectButtons();
   setProjectView();
   initializeContactForm();
@@ -61,26 +61,51 @@ function initializeSearchAndFilters() {
 
   // Filter buttons
   document.querySelector("#all-filter").addEventListener("click", () => {
+    setActiveFilter("#all-filter");
     updateProjects("all");
   });
   document.querySelector("#painting-filter").addEventListener("click", () => {
+    setActiveFilter("#painting-filter");
     updateProjects("painting");
   });
-  document.querySelector("#printmaking-filter").addEventListener("click", () => {
-    updateProjects("printmaking");
-  });
+  document
+    .querySelector("#printmaking-filter")
+    .addEventListener("click", () => {
+      setActiveFilter("#printmaking-filter");
+      updateProjects("printmaking");
+    });
   document.querySelector("#generative-filter").addEventListener("click", () => {
+    setActiveFilter("#generative-filter");
     updateProjects("generative");
   });
-  document.querySelector("#fabrication-filter").addEventListener("click", () => {
-    updateProjects("fabrication");
+  document
+    .querySelector("#fabrication-filter")
+    .addEventListener("click", () => {
+      setActiveFilter("#fabrication-filter");
+      updateProjects("fabrication");
+    });
+  document
+    .querySelector("#illustration-filter")
+    .addEventListener("click", () => {
+      setActiveFilter("#illustration-filter");
+      updateProjects("illustration");
+    });
+  document
+    .querySelector("#photography-filter")
+    .addEventListener("click", () => {
+      setActiveFilter("#photography-filter");
+      updateProjects("photography");
+    });
+}
+
+function setActiveFilter(activeButtonId) {
+  // Remove active class from all filter buttons
+  document.querySelectorAll(".filter-button").forEach((btn) => {
+    btn.classList.remove("active");
   });
-  document.querySelector("#illustration-filter").addEventListener("click", () => {
-    updateProjects("illustration");
-  });
-  document.querySelector("#photography-filter").addEventListener("click", () => {
-    updateProjects("photography");
-  });
+
+  // Add active class to the clicked button
+  document.querySelector(activeButtonId).classList.add("active");
 }
 
 // Project view management
@@ -99,6 +124,12 @@ function buildProjectButtons() {
     document.querySelector(id).addEventListener("click", () => {
       doProject(i);
       setDarkMode();
+
+      // Scroll to selected project section
+      document.querySelector("#selected-project-section").scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     });
   }
 }
@@ -120,11 +151,9 @@ export function setDarkMode() {
       break;
     }
     case "dark": {
-      document.querySelector("#dark-mode-switch").checked;
       goDark();
       sessionStorage.setItem("dm", "dark");
       document.querySelector("#dark-mode-switch").checked = true;
-      document.querySelector("#dark-mode-switch").checked;
       break;
     }
   }
@@ -149,118 +178,26 @@ export function toggleDarkMode() {
 }
 
 export function goDark() {
-  let e = document.body;
-  e.classList.add("bhf-dark");
-  e.classList.remove("bhf-light");
-  e = document.querySelector("#header");
-  e.classList.add("bhf-dark");
-  e.classList.remove("bhf-light");
-  e = document.querySelector("#footer");
-  e.classList.add("bhf-dark");
-  e.classList.remove("bhf-light");
-  e = document.querySelector("#contact-form");
-  e.classList.add("contact-form-dark");
-  e.classList.remove("contact-form-light");
-  e = document.querySelector("#search-term");
-  e.classList.add("buttons-dark");
-  e.classList.remove("buttons-light");
-  let l1 = document.getElementsByTagName("a");
-  for (let e of l1) {
-    e.classList.add("n-list-dark");
-    e.classList.remove("n-list-light");
-  }
-  let l2 = document.getElementsByTagName("strong");
-  for (let e of l2) {
-    e.classList.add("n-list-dark");
-    e.classList.remove("n-list-light");
-  }
-  let l3 = document.getElementsByTagName("label");
-  for (let e of l3) {
-    e.classList.add("n-list-dark");
-    e.classList.remove("n-list-light");
-  }
-  let l4 = document.getElementsByTagName("button");
-  for (let e of l4) {
-    e.classList.add("buttons-dark");
-    e.classList.remove("buttons-light");
-  }
-  let l5 = document.getElementsByTagName("svg");
-  for (let e of l5) {
-    e.classList.add("logo-dark");
-    e.classList.remove("logo-light");
-  }
-  let l6 = document.getElementsByClassName("card-footer");
-  for (let e of l6) {
-    e.classList.add("bhf-dark");
-    e.classList.remove("bhf-light");
-  }
-  let l7 = document.getElementsByClassName("title-box");
-  for (let e of l7) {
-    e.classList.add("bhf-dark");
-    e.classList.remove("bhf-light");
-  }
-  let l8 = document.getElementsByClassName("card");
-  for (let e of l8) {
-    e.classList.add("buttons-dark");
-    e.classList.remove("buttons-light");
+  document.body.classList.add("dark-mode");
+  document.body.classList.remove("bhf-light");
+
+  // Update dark mode icon
+  const icon = document.querySelector("#dark-mode-icon");
+  if (icon) {
+    icon.classList.remove("fa-moon");
+    icon.classList.add("fa-sun");
   }
 }
 
 export function goLight() {
-  let e = document.body;
-  e.classList.remove("bhf-dark");
-  e.classList.add("bhf-light");
-  e = document.querySelector("#header");
-  e.classList.remove("bhf-dark");
-  e.classList.add("bhf-light");
-  e = document.querySelector("#footer");
-  e.classList.remove("bhf-dark");
-  e.classList.add("bhf-light");
-  e = document.querySelector("#contact-form");
-  e.classList.remove("contact-form-dark");
-  e.classList.add("contact-form-light");
-  e = document.querySelector("#search-term");
-  e.classList.remove("buttons-dark");
-  e.classList.add("buttons-light");
-  let l1 = document.getElementsByTagName("a");
-  for (let e of l1) {
-    e.classList.add("n-list-light");
-    e.classList.remove("n-list-dark");
-  }
-  let l2 = document.getElementsByTagName("strong");
-  for (let e of l2) {
-    e.classList.add("n-list-light");
-    e.classList.remove("n-list-dark");
-  }
-  let l3 = document.getElementsByTagName("label");
-  for (let e of l3) {
-    e.classList.add("n-list-light");
-    e.classList.remove("n-list-dark");
-  }
-  let l4 = document.getElementsByTagName("button");
-  for (let e of l4) {
-    e.classList.add("buttons-light");
-    e.classList.remove("buttons-dark");
-  }
-  let l5 = document.getElementsByTagName("svg");
-  for (let e of l5) {
-    e.classList.add("logo-light");
-    e.classList.remove("logo-dark");
-  }
-  let l6 = document.getElementsByClassName("card-footer");
-  for (let e of l6) {
-    e.classList.add("bhf-light");
-    e.classList.remove("bhf-dark");
-  }
-  let l7 = document.getElementsByClassName("title-box");
-  for (let e of l7) {
-    e.classList.add("bhf-light");
-    e.classList.remove("bhf-dark");
-  }
-  let l8 = document.getElementsByClassName("card");
-  for (let e of l8) {
-    e.classList.add("buttons-light");
-    e.classList.remove("buttons-dark");
+  document.body.classList.remove("dark-mode");
+  document.body.classList.add("bhf-light");
+
+  // Update dark mode icon
+  const icon = document.querySelector("#dark-mode-icon");
+  if (icon) {
+    icon.classList.remove("fa-sun");
+    icon.classList.add("fa-moon");
   }
 }
 
@@ -323,10 +260,10 @@ function sendTheEmail() {
 
 async function doProject(id) {
   sessionStorage.setItem("selected", id.toString());
-  document.querySelector("#project-message").classList.remove("d-inline");
+  document.querySelector("#project-message").classList.remove("d-block");
   document.querySelector("#project-message").classList.add("d-none");
   document.querySelector("#single-project").classList.remove("d-none");
-  document.querySelector("#single-project").classList.add("d-inline");
+  document.querySelector("#single-project").classList.add("d-block");
   let data = {
     project: projectList[id],
   };
@@ -357,23 +294,49 @@ async function doProject(id) {
   setDarkMode();
 }
 
+// Replace the code that renders the selected project card:
+function renderSelectedProject(project) {
+  const singleProject = document.getElementById("single-project");
+  if (!project) {
+    singleProject.innerHTML = "";
+    singleProject.classList.add("d-none");
+    document.getElementById("project-message").classList.remove("d-none");
+    return;
+  }
+  singleProject.innerHTML = `
+    <div class="card selected-project-card shadow-lg mx-auto">
+      <img src="${project.img_url}" class="selected-project-img" alt="${
+    project.project_name
+  }">
+      <div class="selected-project-body">
+        <h3>${project.project_name}</h3>
+        <p>${project.description ? project.description : ""}</p>
+        <p><strong>Category:</strong> ${project.category}</p>
+        <p><small class="text-muted">${project.date_created}</small></p>
+      </div>
+    </div>
+  `;
+  singleProject.classList.remove("d-none");
+  document.getElementById("project-message").classList.add("d-none");
+}
+
 function updateProjects(category) {
   // init variables
   let count = 0;
   let filter = document.getElementById("search-term").value.toUpperCase();
   if (filter == "") filter = "none";
-  
+
   // clean up the message under the search box
   let messageHolder = document.querySelector("#search-message");
   messageHolder.classList.add("d-none");
-  messageHolder.classList.remove("d-inline");
-  
+  messageHolder.classList.remove("d-block");
+
   // if there are no selectors - clear everything in search box
   if (category == "all" && document.getElementById("search-term").value != "") {
     document.getElementById("search-term").value = "";
     filter = "";
   }
-  
+
   const buttons = document.querySelectorAll(".filter-button");
   // adjust filter button visibility based on selected filter
   buttons.forEach(function (item) {
@@ -389,32 +352,32 @@ function updateProjects(category) {
       item.classList.add("d-none");
     }
   });
-  
+
   // go through project list and cull based on criteria
   projectList.forEach(function (proj, idx) {
     let pString = "#project-holder-" + projectList[idx].id;
     let pDisplay = document.querySelector(pString);
-    
+
     if (
       proj.category.toUpperCase() == category.toUpperCase() ||
       category == "all" ||
       proj.project_name.toUpperCase().includes(filter) ||
       proj.project_description.toUpperCase().includes(filter)
     ) {
-      pDisplay.classList.add("d-inline");
       pDisplay.classList.remove("d-none");
+      pDisplay.classList.add("d-flex");
       count++;
     } else {
       pDisplay.classList.add("d-none");
-      pDisplay.classList.remove("d-inline");
+      pDisplay.classList.remove("d-flex");
     }
   });
-  
+
   if (count == 0) {
-    messageHolder.classList.add("d-inline");
     messageHolder.classList.remove("d-none");
+    messageHolder.classList.add("d-block");
   } else {
     messageHolder.classList.add("d-none");
-    messageHolder.classList.remove("d-inline");
+    messageHolder.classList.remove("d-block");
   }
 }

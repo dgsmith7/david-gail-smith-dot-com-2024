@@ -1,16 +1,11 @@
-<div class="card m-0 p-0 h-100 fadein shadow-lg">
-  <img src="<%=image %>" class="proj-img card-img-top h-100 p-0" alt="An image of the <%= name %> project">
-  <div class="title-box border-0">
-    <div class="card-title col text-center border-0">
-      <p class="h4 m-1 p-0">
-        <strong>
-          <%= name %>
-        </strong>
-      </p>
-    </div>
+<div class="card h-100 shadow-lg">
+  <img src="<%=image %>" class="card-img-top" alt="An image of the <%= name %> project">
+  <div class="card-body">
+    <h5 class="card-title"><%= name %></h5>
   </div>
-  <div class="card-footer p-0 border-0">
-    <a href="/#single-project-area"><button id="b-<%= ident %>"
-        class="buttons-light project-link btn mb-2 btn-outline-light">Select Project</button></a>
+  <div class="card-footer">
+    <a href="<%= link %>">
+      <button id="b-<%= ident %>" class="btn btn-outline-primary btn-sm project-link">Select</button>
+    </a>
   </div>
 </div>

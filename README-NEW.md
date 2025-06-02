@@ -52,18 +52,21 @@ A clean, modern portfolio website for artist David Gail Smith, built with Expres
 ### Development
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/dgsmith7/david-gail-smith-dot-com-2024.git
    cd david-gail-smith-dot-com-2024
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
    Create a `.env` file with:
+
    ```env
    PORT=3000
    MAIL_HOST=your-smtp-host
@@ -77,6 +80,7 @@ A clean, modern portfolio website for artist David Gail Smith, built with Expres
    ```
 
 4. **Start development server**
+
    ```bash
    npm run dev
    ```
@@ -86,6 +90,7 @@ A clean, modern portfolio website for artist David Gail Smith, built with Expres
 ### Production Build
 
 Generate static files for deployment:
+
 ```bash
 npm run build
 ```
@@ -116,6 +121,7 @@ The `.do/app.yaml` file handles the rest of the configuration automatically.
 ### Alternative Static Hosting
 
 For static hosting (Netlify, Vercel, etc.):
+
 1. Run `npm run build`
 2. Deploy the `dist/` folder
 3. Note: Contact form won't work without server-side processing
@@ -125,6 +131,7 @@ For static hosting (Netlify, Vercel, etc.):
 ### Adding Projects
 
 Edit `data/projects.json` to add new projects:
+
 ```json
 {
   "id": 1,
@@ -144,6 +151,7 @@ Edit `data/projects.json` to add new projects:
 ### Styling
 
 The main stylesheet is `public/css/modern.css` which uses:
+
 - CSS custom properties (variables) for theming
 - Bootstrap 5 utilities
 - Clean, maintainable structure
@@ -151,6 +159,7 @@ The main stylesheet is `public/css/modern.css` which uses:
 ### Dark Mode
 
 Dark mode is handled via CSS classes and JavaScript:
+
 - Theme state stored in `sessionStorage`
 - CSS variables for light/dark color schemes
 - Automatic class toggling on all elements
@@ -158,6 +167,7 @@ Dark mode is handled via CSS classes and JavaScript:
 ## 📧 Contact Form
 
 The contact form includes:
+
 - Bootstrap validation
 - Honeypot spam protection
 - Email sending via Nodemailer
@@ -166,6 +176,7 @@ The contact form includes:
 ## 🧹 Code Quality
 
 This codebase follows:
+
 - **ES6 Modules**: Clean import/export structure
 - **DRY Principles**: No code duplication
 - **Modular Architecture**: Separated concerns
