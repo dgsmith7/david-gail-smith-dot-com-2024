@@ -1,0 +1,53 @@
+/* Footer Specific Fixes */
+
+/* Make veteran owned business logo visible in all modes */
+#vob {
+  max-height: 35px;
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Special handling for dark mode */
+.bhf-dark #vob {
+  filter: brightness(2) !important; /* Make it significantly brighter in dark mode */
+}
+
+/* Make footer links visible in dark mode */
+.bhf-dark a, 
+footer.bhf-dark a,
+.bhf-dark .text-dark,
+footer.bhf-dark .text-dark {
+  color: #57c9c9 !important; /* Use a bright cyan color that's visible on dark backgrounds */
+}
+
+/* Hover state for footer links */
+.bhf-dark a:hover, 
+footer.bhf-dark a:hover,
+.bhf-dark .text-dark:hover,
+footer.bhf-dark .text-dark:hover {
+  color: #6ac29d !important; /* Light green on hover */
+  text-decoration: underline;
+}
+
+/* Additional fix for the DGS Creative LLC link specifically */
+footer .text-dark,
+footer a.text-dark,
+footer a.text-decoration-none {
+  transition: color 0.3s ease;
+}
+
+.bhf-dark footer .text-dark,
+.bhf-dark footer a.text-dark,
+.bhf-dark footer a.text-decoration-none,
+footer.bhf-dark .text-dark,
+footer.bhf-dark a.text-dark,
+footer.bhf-dark a.text-decoration-none {
+  color: #57c9c9 !important;
+}
+
+/* Fix for social media icons color */
+.bhf-dark footer svg.logo-light,
+footer.bhf-dark svg.logo-light {
+  fill: #57c9c9 !important; 
+}

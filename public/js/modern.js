@@ -72,8 +72,16 @@ function enableDarkMode() {
   const vobImg = document.querySelector("#vob");
   if (vobImg) {
     vobImg.style.opacity = "1";
-    vobImg.style.filter = "brightness(1.5)";
+    vobImg.style.filter = "brightness(2)";
+    vobImg.style.display = "inline-block";
+    vobImg.style.visibility = "visible";
   }
+
+  // Ensure footer links are visible
+  const footerLinks = document.querySelectorAll("footer a, footer .text-dark");
+  footerLinks.forEach((link) => {
+    link.style.color = "#57c9c9";
+  });
 
   // Apply classes to elements
   applyClassesToElements("a", "n-list-dark", "n-list-light");
@@ -119,9 +127,17 @@ function disableDarkMode() {
   // Reset the veteran owned business image in the footer
   const vobImg = document.querySelector("#vob");
   if (vobImg) {
-    vobImg.style.opacity = "";
+    vobImg.style.opacity = "1";
     vobImg.style.filter = "";
+    vobImg.style.display = "inline-block";
+    vobImg.style.visibility = "visible";
   }
+
+  // Reset footer links
+  const footerLinks = document.querySelectorAll("footer a, footer .text-dark");
+  footerLinks.forEach((link) => {
+    link.style.color = "";
+  });
 
   // Apply classes to elements
   applyClassesToElements("a", "n-list-light", "n-list-dark");
