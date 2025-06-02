@@ -12,13 +12,11 @@
       </div>
 
       <div class="col-4 col-md-4 m-0 p-0 justify-content-center text-center">
-        <img id="vob" 
-             src="./images/VOB-logo-transparent.png" 
-             class="rounded-3" 
-             alt="Veteran-owned business emblem"
-             style="display: inline-block !important; visibility: visible !important; opacity: 1 !important;">
+        <img id="vob" src="/images/VOB-logo-transparent.png" class="rounded-3" alt="Veteran-owned business emblem"
+          style="display: inline-block !important; visibility: visible !important; opacity: 1 !important; width: 35px; height: auto;">
         <div class="ms-1 ps-1 mb-md-0">
-          <a href="https://www.dgs-creative.com" target="_blank" class="footer-link text-decoration-none">&copy; 2024 -
+          <a href="https://www.dgs-creative.com" target="_blank" class="footer-link text-decoration-none"
+            style="color: inherit;">&copy; 2024 -
             DGS Creative, LLC</a>
         </div>
       </div>
@@ -59,13 +57,13 @@
   </div>
   <script>
     // Fix VOB logo visibility issue
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const vobImg = document.getElementById('vob');
       if (vobImg) {
         vobImg.style.display = 'inline-block';
         vobImg.style.visibility = 'visible';
         vobImg.style.opacity = '1';
-        
+
         // Try loading the image with different paths if it fails
         if (!vobImg.complete) {
           const paths = [
@@ -74,14 +72,14 @@
             '../images/VOB-logo-transparent.png',
             '/public/images/VOB-logo-transparent.png'
           ];
-          
+
           let pathIndex = 0;
-          const tryNextPath = function() {
+          const tryNextPath = function () {
             if (pathIndex < paths.length) {
               vobImg.src = paths[pathIndex++];
             }
           };
-          
+
           vobImg.onerror = tryNextPath;
           tryNextPath();
         }

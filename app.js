@@ -63,6 +63,22 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.static("public"));
 
+// Ensure static files are properly served
+app.use(express.static(path.join(__dirname, "public")));
+
+// Add specific routes for CSS and images to handle possible path issues
+app.get("/css/:file", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "css", req.params.file));
+});
+
+app.get("/images/:file", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "images", req.params.file));
+});
+
+app.get("/js/:file", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "js", req.params.file));
+});
+
 app.get("/", async (req, res, next) => {
   try {
     res.render("index.ejs", {
