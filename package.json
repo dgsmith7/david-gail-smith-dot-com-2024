@@ -8,6 +8,9 @@
     "test": "npx hardhat test",
     "dev": "npx nodemon app.js",
     "start": "node app.js",
+    "export-db": "node utils/db-to-json.js",
+    "build": "node build-static.js",
+    "serve": "node static-server.js",
     "build:digitalocean": "npm install --production=false && npm run build && npm ci"
   },
   "repository": {

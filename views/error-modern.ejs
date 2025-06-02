@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+  <title>David Gail Smith - Error</title>
+  <meta name="author" content="David G. Smith">
+  <meta name="description" content="Error page for the David Gail Smith art portfolio website.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Jura:wght@300;400;600&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./css/modern.css">
+</head>
+
+<body>
+  <%- include('header-modern'); %>
+
+  <main>
+    <section class="error-section">
+      <div class="container">
+        <div class="error-content">
+          <h1 class="script-text">Oops!</h1>
+          <p><%=msg %></p>
+          <a href="/" class="btn btn-primary">Return to Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%- include('footer-modern'); %>
+  <script src="./js/modern.js" type="module"></script>
+</body>
+
+</html>
